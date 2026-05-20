@@ -56,6 +56,13 @@ operators.forEach((singleItem) => {
             displayValue = operate(Number(firstOperand), Number(secondOperand), operator);
             display.textContent = displayValue;
         }
+        else if(event.target.innerText === "clear"){
+            displayValue = "";
+            firstOperand = "";
+            secondOperand = "";
+            operator = "";
+            display.textContent = displayValue;
+        }
         else {
             firstOperand = displayValue;
             operator = event.target.innerText;
