@@ -14,7 +14,7 @@ function divide(a, b) {
     return a / b;
 }
 
-let firstOperand, operator, secondOperand;
+let firstOperand = "", operator = "", secondOperand = "";
 
 function operate(first, second, op) {
     let result = 0;
@@ -45,13 +45,22 @@ numbtn.forEach((singleItem) => {
     singleItem.addEventListener('click', (event) => {
         let text = event.target.innerText;
         displayValue += text;
-        display.textContent = displayValue;
+        if(firstOperand !== "" && operator !== ""){
+            display.textContent = firstOperand + " " + operator + " " + displayValue;
+        }
+        else{
+            display.textContent = displayValue;
+        }
+        
     });
 });
 
 operators.forEach((singleItem) => {
     singleItem.addEventListener('click', (event) => {
         if (event.target.innerText === '=') {
+            if(operator === ""){
+                return;
+            }
             secondOperand = displayValue;
             displayValue = operate(Number(firstOperand), Number(secondOperand), operator);
             display.textContent = displayValue;
@@ -64,10 +73,17 @@ operators.forEach((singleItem) => {
             display.textContent = displayValue;
         }
         else {
-            firstOperand = displayValue;
+            if(firstOperand != "" && operator != "" && displayValue != ""){
+                secondOperand = displayValue;
+                firstOperand = operate(Number(firstOperand), Number(secondOperand), operator);
+                display.textContent = firstOperand;
+            }
+            else{
+                firstOperand = displayValue;
+            }
             operator = event.target.innerText;
-            display.textContent = operator;
             displayValue = "";
+            display.textContent = firstOperand + " " + operator;
         }
     });
 });
